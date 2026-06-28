@@ -61,7 +61,271 @@
   .tag-rating { border-color: #f1c40f; color: #f1c40f; background: rgba(241, 196, 15, 0.1); font-weight: 700; }
   .map-container { flex: 1; position: relative; z-index: 1; }
   #map { width: 100%; height: 100%; }
-  .map-legend { position: absolute; bottom: 2rem; right: 1rem; z-index: 800; background: rgba(30, 30, 30, 0.95); backdrop-filter: blur(8px); padding: 1.2rem; border-radius: 12px; border: 1px solid #333; }
+  
+  .map-legend { position: absolute; bottom: 2rem; right: 1rem; z-index: 800; background: rgba(30, 30, 30, 0.95); backdrop-filter: blur(8px); padding: 1.2rem; border-radius: 12px; border: 1px solid #333; max-width: 260px; }
+  .map-legend.hidden { display: none !important; }
+  /* Premium mobile sidebar */
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: min(92vw, 390px);
+      height: 100vh;
+      z-index: 1200;
+      background: linear-gradient(180deg, rgba(18,18,18,.98), rgba(28,28,28,.98));
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      transform: translateX(0);
+      overflow-y: auto;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+
+  @media (max-width: 768px) {
+    .sidebar.premium-mobile-sidebar {
+      padding-top: 0;
+    }
+    .sidebar.premium-mobile-sidebar::before {
+      content: '';
+      display: block;
+      width: 42px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.25);
+      margin: 10px auto 6px;
+    }
+    .sidebar.premium-mobile-sidebar .sidebar-toggle-label {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, rgba(26,26,26,.98), rgba(18,18,18,.98));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .sidebar-section {
+      margin: 10px 12px 14px;
+      padding: 14px 12px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+    }
+    .sidebar-section + .sidebar-section {
+      margin-top: 0;
+    }
+    .sidebar-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.74);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sidebar-section-title .count {
+      font-size: .72rem;
+      color: rgba(255,255,255,.5);
+    }
+    .sidebar-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+      margin: 8px 12px 10px;
+    }
+    .filter-buttons {
+      padding-bottom: 2px;
+    }
+    .filter-btn.active {
+      box-shadow: 0 10px 22px rgba(0,0,0,.24);
+      transform: translateY(-1px);
+    }
+    .shop-card {
+      padding: 14px 14px 12px;
+    }
+    .shop-card .shop-title, .shop-card h3 {
+      font-weight: 700;
+      font-size: .95rem;
+    }
+    .shop-card .tags, .shop-card .shop-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: .72rem;
+    }
+    .shop-card .tag {
+      border-radius: 999px;
+    }
+  }
+
+    .sidebar.premium-collapsed {
+      transform: translateX(calc(-100% + 52px));
+    }
+    .sidebar.premium-collapsed .sidebar-toggle-label {
+      opacity: 1;
+    }
+    .sidebar-toggle-label {
+      position: sticky;
+      top: 0;
+      z-index: 1300;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 14px 14px 16px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+    }
+    .sidebar-toggle-label .chev {
+      transition: transform .2s ease;
+    }
+    .sidebar.premium-collapsed .sidebar-toggle-label .chev {
+      transform: rotate(180deg);
+    }
+    .sidebar > *:not(.sidebar-toggle-label) {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .filter-buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 8px 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.18);
+      font-size: .72rem;
+    }
+    .shop-list {
+      display: grid;
+      gap: 10px;
+    }
+    .shop-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .shop-card .title, .shop-card h3 {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .shop-card .meta, .shop-card .tag, .shop-card .shop-contact {
+      font-size: .88rem;
+    }
+    .sidebar > h1, .sidebar > h2, .sidebar > h3 {
+      letter-spacing: .2px;
+    }
+  }
+  .map-legend.hidden { display: none !important; }
+  /* Premium mobile sidebar */
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: min(78vh, 720px);
+      z-index: 1300;
+      background: linear-gradient(180deg, rgba(16,16,16,.98), rgba(28,28,28,.98));
+      box-shadow: 0 -16px 60px rgba(0,0,0,.45);
+      transform: translateY(calc(100% - 68px));
+      overflow-y: auto;
+      border-radius: 22px 22px 0 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-left: 1px solid rgba(255,255,255,.08);
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .sidebar.premium-collapsed {
+      transform: translateY(calc(100% - 68px));
+    }
+    .sidebar:not(.premium-collapsed) {
+      transform: translateY(0);
+    }
+    .sidebar.premium-collapsed .sidebar-toggle-label {
+      opacity: 1;
+    }
+    .sidebar-toggle-label {
+      position: sticky;
+      top: 0;
+      z-index: 1300;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 14px 14px 16px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+    }
+    .sidebar-toggle-label .chev {
+      transition: transform .2s ease;
+    }
+    .sidebar.premium-collapsed .sidebar-toggle-label .chev {
+      transform: rotate(180deg);
+    }
+    .sidebar > *:not(.sidebar-toggle-label) {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .filter-buttons {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 8px 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.18);
+      font-size: .72rem;
+    }
+    .shop-list {
+      display: grid;
+      gap: 10px;
+    }
+    .shop-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .shop-card .title, .shop-card h3 {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .shop-card .meta, .shop-card .tag, .shop-card .shop-contact {
+      font-size: .88rem;
+    }
+    .sidebar > h1, .sidebar > h2, .sidebar > h3 {
+      letter-spacing: .2px;
+    }
+  }
+  @media (max-width: 768px) {
+    .map-container { height: 62vh !important; }
+    #map { height: 100% !important; }
+    .map-legend { max-width: calc(100vw - 2rem); right: 1rem; left: 1rem; bottom: 1rem; padding: 1rem; }
+    .map-btn-group { top: 0.75rem; right: 0.75rem; gap: 0.5rem; }
+    .map-btn { width: 40px; height: 40px; }
+  }
+
   .map-legend h4 { font-size: 0.8rem; margin-bottom: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
   .legend-item { display: flex; align-items: center; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--gray); }
   .legend-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 10px; border: 2px solid rgba(255,255,255,0.3); }
@@ -175,7 +439,7 @@
         </div>
       </div>
       <div class="filter-group">
-        <h4>Especialidad / Horario</h4>
+        </div><div class="sidebar-section"><div class="sidebar-section-title">Especialidad / Horario <span class="count">Filtros</span></div>
         <div class="filter-buttons" id="typeFilters">
           <button class="filter-btn type-filter-btn active" data-filter="all" onclick="setTypeFilter('all', this)">Todos</button>
           <button class="filter-btn type-filter-btn" data-filter="electrica" onclick="setTypeFilter('electrica', this)">Eléctricas</button>
@@ -216,8 +480,8 @@
       <button class="map-btn" onclick="locateUser()" title="Mi ubicación"><i class="fas fa-crosshairs"></i></button>
       <button class="map-btn" onclick="resetView()" title="Vista General"><i class="fas fa-globe-europe"></i></button>
     </div>
-    <div class="map-legend"><div style="font-size:8px;color:#ddd;margin-bottom:8px;font-style:italic;">Las entradas marcadas como centro comercial son tiendas y no centros de reparación.</div>
-      <h4>Provincias</h4>
+    <div class="map-legend" id="mapLegendPanel"><button type="button" id="closeMapLegend" aria-label="Cerrar leyenda" style="position:absolute;top:8px;right:8px;background:transparent;border:0;color:#fff;font-size:18px;line-height:1;cursor:pointer;z-index:9999;pointer-events:auto;">×</button><div style="font-size:8px;color:#ddd;margin-bottom:8px;font-style:italic;">Las entradas marcadas como centro comercial son tiendas y no centros de reparación.</div>
+      <div class="sidebar-section"><div class="sidebar-section-title">Provincias <span class="count">Zona</span></div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-barcelona);"></div>Barcelona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-girona);"></div>Girona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-lleida);"></div>Lleida</div>
@@ -681,5 +945,55 @@ function toggleSidebar(forceState = null) {
 }
 initMap(); renderShopList(shops);
 </script>
+
+<script id="mapLegendCloserFix">
+(function(){
+  function bindLegendClose(){
+    const btn = document.getElementById('closeMapLegend');
+    const panel = document.getElementById('mapLegendPanel');
+    if (!btn || !panel) return false;
+    btn.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      panel.classList.add('hidden');
+      return false;
+    };
+    return true;
+  }
+  if (!bindLegendClose()) {
+    const obs = new MutationObserver(() => { if (bindLegendClose()) obs.disconnect(); });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+</script>
+
+
+<script id="premiumSidebarToggle">
+(function(){
+  function init(){
+    const sidebar = document.querySelector('.sidebar.premium-mobile-sidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    if (!sidebar || !toggle) return false;
+    const mql = window.matchMedia('(max-width: 768px)');
+    const sync = () => {
+      if (mql.matches) sidebar.classList.add('premium-collapsed');
+      else sidebar.classList.remove('premium-collapsed');
+    };
+    toggle.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      sidebar.classList.toggle('premium-collapsed');
+    };
+    sync();
+    mql.addEventListener?.('change', sync);
+    return true;
+  }
+  if (!init()) {
+    const obs = new MutationObserver(() => { if (init()) obs.disconnect(); });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+</script>
+
 </body>
 </html>
