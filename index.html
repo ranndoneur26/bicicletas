@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talleres de bici de Cataluña y Andorra</title>
+<title>Tiendas y talleres de reparación de bicicletas en Cataluña y Andorra | Carbono, pintura e infantiles</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -83,7 +83,7 @@
   .popup-directions { margin-top: 1.2rem; display: flex; align-items: center; justify-content: center; background: var(--primary); color: var(--dark); padding: 0.7rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.9rem; gap: 8px; }
   .popup-directions:hover { background: var(--primary-dark); }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); } 70% { box-shadow: 0 0 0 14px rgba(231, 76, 60, 0); } 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); } }
-  .pulse-marker { animation: pulse 2s infinite; }
+  .pulse-marker { animation: bikeBlink 1.35s ease-in-out infinite; }
   .sidebar-toggle { display: none; position: absolute; top: 1.2rem; left: 1.2rem; z-index: 1001; background: var(--primary); color: var(--dark); border: none; width: 45px; height: 45px; border-radius: 12px; font-size: 1.3rem; cursor: pointer; align-items: center; justify-content: center; }
   .close-sidebar { display: none; position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10; }
   .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 850; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -93,11 +93,61 @@
     .sidebar-toggle { display: flex; } .close-sidebar { display: flex; align-items: center; justify-content: center; }
     .header-stats { display: none; } .overlay.active { opacity: 1; pointer-events: auto; }
   }
+
+  .bike-pin {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,.96);
+    box-shadow: 0 4px 10px rgba(0,0,0,.22);
+    animation: bikeBlink 1.35s ease-in-out infinite;
+  }
+  .bike-pin svg { width: 16px; height: 16px; display:block; }
+  @keyframes bikeBlink {
+    0%,100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+    50% { opacity: .5; transform: scale(1.18); filter: drop-shadow(0 0 6px currentColor); }
+  }
+
+
+  .distribuidor-pin {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 2px solid rgba(255,255,255,.96);
+    box-shadow: 0 4px 10px rgba(0,0,0,.22);
+  }
+  .distribuidor-pin svg { width: 16px; height: 16px; display:block; }
 </style>
+
+  <meta name="description" content="Directorio de tiendas y talleres de reparación de bicicletas en Cataluña y Andorra. Servicios de mecánica, carbono, pintura, e-bike, bicicletas infantiles, cargo bikes y plegables.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Tiendas y talleres de reparación de bicicletas en Cataluña y Andorra",
+  "url": "https://tudominio.com/",
+  "about": [
+    "Reparación de bicicletas",
+    "Reparación de cuadros de carbono",
+    "Pintura de bicicletas",
+    "Reparación de bicicletas infantiles",
+    "Servicio técnico para bicicletas eléctricas",
+    "Cargo bikes",
+    "Bicicletas plegables"
+  ]
+}
+</script>
 </head>
 <body>
 <header>
-  <h1><i class="fas fa-bicycle"></i> Talleres de bici de Cataluña y Andorra</h1>
+  <h1><i class="fas fa-bicycle"></i> Tiendas y talleres de reparación de bicicletas en Cataluña y Andorra <span style="font-size:0.75em; opacity:0.85; font-weight:400;">Revisión 2026</span></h1>
   <div class="header-stats">
     <div class="header-stat"><i class="fas fa-wrench"></i> <span id="totalStats">0</span> Talleres</div>
     <div class="header-stat"><i class="fas fa-calendar-check"></i> <span id="satStats">0</span> Abren Sáb</div>
@@ -121,7 +171,7 @@
           <button class="filter-btn" data-filter="Girona" onclick="setProvinceFilter('Girona', this)">Girona</button>
           <button class="filter-btn" data-filter="Lleida" onclick="setProvinceFilter('Lleida', this)">Lleida</button>
           <button class="filter-btn" data-filter="Tarragona" onclick="setProvinceFilter('Tarragona', this)">Tarragona</button>
-          <button class="filter-btn" data-filter="Andorra" onclick="setProvinceFilter('Andorra', this)">Andorra</button>
+          <button class="filter-btn" data-filter="Andorra" onclick="setProvinceFilter('Andorra', this)">País Andorra</button>
         </div>
       </div>
       <div class="filter-group">
@@ -133,6 +183,10 @@
           <button class="filter-btn type-filter-btn" data-filter="carretera" onclick="setTypeFilter('carretera', this)">Carretera</button>
           <button class="filter-btn type-filter-btn" data-filter="mtb" onclick="setTypeFilter('mtb', this)">MTB</button>
           <button class="filter-btn type-filter-btn" data-filter="gravel" onclick="setTypeFilter('gravel', this)">Gravel</button>
+          <button class="filter-btn type-filter-btn" data-filter="cargobike" onclick="setTypeFilter('cargobike', this)">Cargo Bikes</button>
+          <button class="filter-btn type-filter-btn" data-filter="plegable" onclick="setTypeFilter('plegable', this)">Bicicletas plegables</button>
+          <button class="filter-btn type-filter-btn" data-filter="centro_comercial" onclick="setTypeFilter('centro_comercial', this)">Centros comerciales</button>
+          <button class="filter-btn type-filter-btn" data-filter="distribuidor" onclick="setTypeFilter('distribuidor', this)">Distribuidores</button>
           <button class="filter-btn type-filter-btn" data-filter="saturday" onclick="setTypeFilter('saturday', this)"><i class="fas fa-calendar-week" style="margin-right:4px;"></i>Abre Sábado</button>
         </div>
       </div>
@@ -162,13 +216,13 @@
       <button class="map-btn" onclick="locateUser()" title="Mi ubicación"><i class="fas fa-crosshairs"></i></button>
       <button class="map-btn" onclick="resetView()" title="Vista General"><i class="fas fa-globe-europe"></i></button>
     </div>
-    <div class="map-legend">
-      <h4>Regiones</h4>
+    <div class="map-legend"><div style="font-size:8px;color:#ddd;margin-bottom:8px;font-style:italic;">Las entradas marcadas como centro comercial son tiendas y no centros de reparación.</div>
+      <h4>Provincias</h4>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-barcelona);"></div>Barcelona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-girona);"></div>Girona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-lleida);"></div>Lleida</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-tarragona);"></div>Tarragona</div>
-      <div class="legend-item"><div class="legend-dot" style="background: var(--cat-andorra);"></div>Andorra</div>
+      <div class="legend-item"><div class="legend-dot" style="background: var(--cat-andorra);"></div>País Andorra</div>
     </div>
   </div>
 </div>
@@ -179,31 +233,31 @@ const shops = [
   // =======================================================================
   // TALLERES ORIGINALES (1-175) - NO SE ELIMINA NINGUNO
   // =======================================================================
-  { id:1, name:"Bicitecla", location:"Barcelona", address:"C/ de Provença 95", phone:"+34 934 56 78 90", lat:41.3850, lng:2.1730, types:["electrica","oficial"], openSaturday:true, marcas:["BOSCH","SHIMANO","FAZUA","Orbea","Haibike"], desc:"Especialistas en e-bikes y servicio oficial de motores." },
-  { id:2, name:"Mammoth Barcelona", location:"Barcelona", address:"C/ de València 230", phone:"+34 934 87 12 34", lat:41.3920, lng:2.1650, types:["tienda"], openSaturday:true, marcas:["Specialized","Orbea","Cannondale","Scott","Giant"], desc:"Una de las tiendas más grandes con taller propio." },
-  { id:3, name:"ESCAPA", location:"Barcelona", address:"C/ del Consell de Cent 330", phone:"+34 934 55 66 77", lat:41.3880, lng:2.1850, types:["tienda"], openSaturday:true, marcas:["Orbea","Specialized","Giant"], desc:"Tienda de referencia en el centro con excelente taller." },
+  { id:1, name:"Bicitecla", location:"Barcelona", address:"C/ de Provença 95", phone:"+34 934 56 78 90", lat:41.3850, lng:2.1730, types:["electrica","oficial"], openSaturday:true, marcas:["BOSCH","SHIMANO","FAZUA","Orbea","Haibike"], website:"https://bicitecla.com", instagram:"https://www.instagram.com/bicitecla/", desc:"Especialistas en e-bikes y servicio oficial de motores." },
+  { id:2, name:"Mammoth Barcelona", location:"Barcelona", address:"C/ de València 230", phone:"+34 934 87 12 34", lat:41.3920, lng:2.1650, types:["tienda"], openSaturday:true, marcas:["Specialized","Orbea","Cannondale","Scott","Giant"], website:"https://www.mammothbikes.com", desc:"Una de las tiendas más grandes con taller propio." },
+  { id:3, name:"ESCAPA", location:"Barcelona", address:"C/ del Consell de Cent 330", phone:"+34 934 55 66 77", lat:41.3880, lng:2.1850, types:["tienda"], openSaturday:true, marcas:["Orbea","Specialized","Giant"], website:"https://www.biciescapa.com/es/", desc:"Tienda de referencia en el centro con excelente taller." },
   { id:4, name:"Central Bike BCN", location:"Barcelona", address:"C/ de Muntaner 50", phone:"+34 934 22 33 44", lat:41.3950, lng:2.1500, types:["electrica"], openSaturday:true, marcas:["Riese & Muller","Urban Arrow","Tern"], desc:"Especialistas en cargo bikes y movilidad eléctrica." },
-  { id:5, name:"Biciclinic", location:"Barcelona", address:"C/ de Casp 140", phone:"+34 934 11 22 33", lat:41.3874, lng:2.1686, types:["tienda"], openSaturday:true, marcas:["Trek","Santa Cruz","Canyon","BMC"], desc:"Taller de alto rendimiento y venta de recambios." },
+  { id:5, name:"Biciclinic", location:"Barcelona", address:"C/ de Casp 140", phone:"+34 934 11 22 33", lat:41.3874, lng:2.1686, types:["tienda"], openSaturday:true, marcas:["Trek","Santa Cruz","Canyon","BMC"], website:"http://www.biciclinic.com", desc:"Taller de alto rendimiento y venta de recambios." },
   { id:6, name:"PUERTO Taller", location:"Barcelona", address:"C/ de Rocafort 249", phone:"+34 640 04 41 77", lat:41.3870, lng:2.1540, types:["tienda"], openSaturday:false, marcas:["Canyon","Orbea"], desc:"Taller independiente especializado en horarios de oficina." },
-  { id:7, name:"Biking Point Vía Augusta", location:"Barcelona", address:"Vía Augusta 139", phone:"+34 936 24 98 96", lat:41.3980, lng:2.1500, types:["tienda"], openSaturday:true, marcas:["Trek","Electra"], desc:"Franquicia con gran stock y taller mecánico completo." },
+  { id:7, name:"Biking Point Vía Augusta", location:"Barcelona", address:"Vía Augusta 139", phone:"+34 936 24 98 96", lat:41.3980, lng:2.1500, types:["tienda"], openSaturday:true, marcas:["Trek","Electra"], website:"https://www.bikingpoint.es/nuestras-tiendas/viaaugusta", desc:"Franquicia con gran stock y taller mecánico completo." },
   { id:8, name:"Ciclos Noviciados", location:"Barcelona", address:"C/ de Noviciat 5", phone:"+34 934 26 77 88", lat:41.3830, lng:2.1760, types:["tienda"], openSaturday:true, marcas:["State Bicycle","Genesis","Bombtrack"], desc:"Referente en cultura urbana, fixed gear y customización." },
   { id:9, name:"Broc & Rodes", location:"Barcelona", address:"C/ de Manso 25", phone:"+34 934 88 99 00", lat:41.3800, lng:2.1600, types:["tienda","carretera"], openSaturday:true, marcas:["3T","Canyon","Bianchi","Pinarello"], desc:"Taller premium para carretera y gravel." },
   { id:10, name:"Onyxbike", location:"Barcelona", address:"C/ de Sants 48", phone:"+34 934 99 00 11", lat:41.3770, lng:2.1450, types:["tienda","carretera"], openSaturday:true, marcas:["Orbea","Cervelo","BH"], desc:"Especialistas en aerodinámica y biomecánica." },
   { id:11, name:"Bicicletes Orpinell", location:"Barcelona", address:"C/ de Sants 108", phone:"+34 934 22 55 66", lat:41.3700, lng:2.1550, types:["tienda"], openSaturday:true, marcas:["Orbea","Specialized","Trek"], desc:"Clásico de Sants con taller de confianza." },
-  { id:12, name:"Velociutat", location:"Barcelona", address:"C/ de Floridablanca 83", phone:"+34 934 44 55 66", lat:41.3750, lng:2.1700, types:["tienda"], openSaturday:true, marcas:["Brompton","Tern","Dahon"], desc:"Especialistas en plegables y movilidad urbana." },
+  { id:12, name:"Velociutat", location:"Barcelona", address:"C/ de Floridablanca 83", phone:"+34 934 44 55 66", lat:41.3750, lng:2.1700, types:["tienda"], openSaturday:true, marcas:["Brompton","Tern","Dahon"], website:"http://www.velociutat.com", desc:"Especialistas en plegables y movilidad urbana." },
   // id:13 "Airbici" ELIMINADO (Cerrado permanentemente)
   { id:14, name:"Castells Bicicletes", location:"Barcelona", address:"C/ de Provença 110", phone:"+34 934 77 88 99", lat:41.3840, lng:2.1780, types:["tienda"], openSaturday:true, marcas:["Orbea","Cannondale"], desc:"Tienda histórica en el Eixample." },
   // id:15 "SuperSís" ELIMINADO (Cerrado permanentemente)
   { id:16, name:"By-Cycle", location:"Barcelona", address:"C/ de Muntaner 120", phone:"+34 934 56 78 11", lat:41.3960, lng:2.1800, types:["tienda"], openSaturday:true, marcas:["Giant","Liv","BH"], desc:"Taller orientado a la mujer ciclista y salida urbana." },
   { id:17, name:"Biciestació", location:"Barcelona", address:"C/ de la Marina 16", phone:"+34 934 22 33 55", lat:41.3850, lng:2.1900, types:["tienda"], openSaturday:true, marcas:["Orbea","Conor","Megamo"], desc:"Punto de alquiler y reparación rápida cerca de la playa." },
-  { id:18, name:"El Ciclo", location:"Barcelona", address:"C/ del Comte d'Urgell 55", phone:"+34 934 88 11 22", lat:41.3720, lng:2.1450, types:["tienda","carretera"], openSaturday:true, marcas:["Wilier","Cinelli","Colnago"], desc:"Exquisita selección de bicicletas de carretera italianas." },
+  { id:18, name:"El Ciclo", location:"Barcelona", address:"C/ del Comte d'Urgell 55", phone:"+34 934 88 11 22", lat:41.3720, lng:2.1450, types:["tienda","carretera"], openSaturday:true, marcas:["Wilier","Cinelli","Colnago"], website:"https://www.elciclobcn.com", desc:"Exquisita selección de bicicletas de carretera italianas." },
   { id:19, name:"Va de bici Taller", location:"Barcelona", address:"C/ de la Indústria 50", phone:"+34 934 99 22 33", lat:41.3820, lng:2.1700, types:["tienda"], openSaturday:false, marcas:[], desc:"Reparación integral con repuestos originales para todo tipo." },
   // id:20 "5034 Bike Store" ELIMINADO (Cerrado permanentemente)
   { id:51, name:"Cicles Gràcia", location:"Barcelona", address:"C/ de Gran de Gràcia 45", phone:"+34 932 18 33 44", lat:41.4020, lng:2.1560, types:["tienda"], openSaturday:true, marcas:["Orbea","Specialized","Trek"], desc:"Taller de confianza en el barrio de Gràcia." },
-  { id:52, name:"Bicicletes Poblenou", location:"Barcelona", address:"C/ de Pallars 130", phone:"+34 933 09 87 65", lat:41.4000, lng:2.2000, types:["tienda","electrica"], openSaturday:true, marcas:["BH","Orbea","Bosch"], desc:"Especialistas en movilidad urbana y eléctrica en el 22@." },
+  { id:52, name:"Bicicletes Poblenou", location:"Barcelona", address:"C/ de Pallars 130", phone:"+34 933 09 87 65", lat:41.4000, lng:2.2000, types:["tienda","electrica"], openSaturday:true, marcas:["BH","Orbea","Bosch"], website:"https://recircula.org", desc:"Especialistas en movilidad urbana y eléctrica en el 22@." },
   { id:53, name:"Bicicorner", location:"Barcelona", address:"C/ de Balmes 180", phone:"+34 932 12 34 56", lat:41.3960, lng:2.1480, types:["tienda","carretera"], openSaturday:true, marcas:["Cannondale","Cervelo","Pinarello"], desc:"Rincón exclusivo para carretera y contrarreloj." },
   { id:54, name:"Dos Cientos", location:"Barcelona", address:"C/ de Sepúlveda 200", phone:"+34 934 44 55 11", lat:41.3790, lng:2.1540, types:["tienda"], openSaturday:true, marcas:["Bianchi","Wilier","Orbea"], desc:"Tienda clásica con amplia variedad de marcas." },
-  { id:55, name:"Bici Lab Barcelona", location:"Barcelona", address:"C/ de la Princesa 20", phone:"+34 933 19 28 37", lat:41.3850, lng:2.1820, types:["tienda","gravel"], openSaturday:true, marcas:["Fixie Inc","Bombtrack","Surly"], desc:"Laboratorio de customización y gravel bikes." },
+  { id:55, name:"Bici Lab Barcelona", location:"Barcelona", address:"C/ de la Princesa 20", phone:"+34 933 19 28 37", lat:41.3850, lng:2.1820, types:["tienda","gravel"], openSaturday:true, marcas:["Fixie Inc","Bombtrack","Surly"], website:"https://bicilab.org", desc:"Laboratorio de customización y gravel bikes." },
   { id:56, name:"Biking Point Sants", location:"Barcelona", address:"C/ de Sants 230", phone:"+34 934 98 76 54", lat:41.3760, lng:2.1410, types:["tienda"], openSaturday:true, marcas:["Trek","Electra","Cannondale"], desc:"Segunda franquicia en Barcelona, excelente taller." },
   { id:57, name:"Cicles K2", location:"Barcelona", address:"C/ del Mar 40, Badalona", phone:"+34 933 87 65 43", lat:41.4500, lng:2.2470, types:["tienda","mtb"], openSaturday:true, marcas:["Orbea","Scott","Merida"], desc:"Referente en Badalona para trails y enduro." },
   { id:58, name:"Bicicletes Sabadell", location:"Barcelona", address:"C/ de Sant Oleguer 15, Sabadell", phone:"+34 937 23 45 67", lat:41.5430, lng:2.1080, types:["tienda"], openSaturday:true, marcas:["Specialized","Orbea","BH"], desc:"Clásico taller en el Vallès Occidental." },
@@ -397,7 +451,53 @@ const shops = [
   { id:208, name:"Andorra Carbon Workshop", location:"Andorra", address:"C/ de Prat de la Creu 60, Andorra la Vella", phone:"+376 811 999", lat:42.5070, lng:1.5200, types:["carbono"], openSaturday:true, marcas:["Reparación Carbono","Pintura Pro"], desc:"Servicio premium de reparación de fibra y pintura en Andorra." },
   { id:209, name:"Pro-Carbon Pyrenees", location:"Lleida", address:"C/ dels Tirallongues 10, La Seu d'Urgell", phone:"+34 973 67 89 99", lat:42.3570, lng:1.4590, types:["carbono"], openSaturday:true, marcas:["MTB","Enduro","Carbono"], desc:"Reparación de cuadros de carbono para bicicletas de montaña extremas." },
   { id:210, name:"FibraBike Empordà", location:"Girona", address:"C/ de l'Empordà 18, Figueres", phone:"+34 972 29 34 99", lat:42.2670, lng:2.9610, types:["carbono"], openSaturday:false, marcas:["Reparación","Pintura","Reconstrucción"], desc:"Reconstrucción y repintado de cuadros de fibra en el Alt Empordà." },
-  { id:211, name:"BiciDecora", location:"Barcelona", address:"C/ de Barcelona, 25, La Roca del Vallès", phone:"+34 938 33 44 99", lat:41.5893, lng:2.3254, types:["carbono"], openSaturday:true, marcas:["Reparación Carbono","Pintura Custom","Vinilado"], desc:"Especialistas en La Roca del Vallès en reparación estructural de fibra de carbono y personalización mediante pintura y vinilo." }
+  { id:211, name:"BiciDecora", location:"Barcelona", address:"C/ de Barcelona, 25, La Roca del Vallès", phone:"+34 938 33 44 99", lat:41.5893, lng:2.3254, types:["carbono"], openSaturday:true, marcas:["Reparación Carbono","Pintura Custom","Vinilado"], desc:"Especialistas en La Roca del Vallès en reparación estructural de fibra de carbono y personalización mediante pintura y vinilo." },
+  // === CARGO BIKE (BICICLETAS DE CARGA / TRANSPORTE) ===
+  { id: 901, name:"Happy Cargo Bike", location:"Barcelona", address:"C/ Roger de Flor 5, 08018 Barcelona", phone:"+34 933 285 834", lat:41.3920, lng:2.1800, types:["tienda","cargobike"], openSaturday:true, marcas:["Cargo bikes familiares","Cargo bikes profesionales"], desc:"Tienda especializada en bicicletas de carga y alquiler en Barcelona (cargo bikes urbanas y de transporte). No es un centro de reparación general." },
+  { id: 902, name:"Central Bike Barcelona", location:"Barcelona", address:"C/ Sepúlveda 6, 08015 Barcelona", phone:"+34 722 30 81 16", lat:41.3830, lng:2.1610, types:["tienda","cargobike"], openSaturday:false, marcas:["E-bikes","Cargo bikes","Riese & Müller"], desc:"Tienda especializada en bicicletas eléctricas urbanas y cargo bikes en el Eixample de Barcelona; foco en venta y servicio oficial, no solo reparación puntual." },
+
+  // === CENTROS COMERCIALES CON TIENDA DE BICIS / DEPORTE ===
+  { id: 911, name:"Decathlon La Maquinista (Westfield La Maquinista)", location:"Barcelona", address:"Passeig de Potosí 2, Centro Comercial Westfield La Maquinista, 08030 Barcelona", phone:"", lat:41.4390, lng:2.1970, types:["tienda","centro_comercial"], openSaturday:true, marcas:["Bicicletas","Accesorios ciclismo","Multideporte"], desc:"Tienda de deporte en el centro comercial Westfield La Maquinista con venta de bicicletas y accesorios. Se considera tienda en centro comercial, no taller de reparación independiente." },
+  { id: 912, name:"Decathlon Diagonal Mar (Diagonal Mar Centre)", location:"Barcelona", address:"Avinguda Diagonal 3, Centro Comercial Diagonal Mar, 08019 Barcelona", phone:"", lat:41.4100, lng:2.2170, types:["tienda","centro_comercial"], openSaturday:true, marcas:["Bicicletas","Accesorios ciclismo","Multideporte"], desc:"Tienda Decathlon ubicada en el centro comercial Diagonal Mar con área de bicicletas, accesorios y material ciclista." },
+  { id: 913, name:"Decathlon Finestrelles (Centre Comercial Finestrelles)", location:"Barcelona", address:"C/ Laureà Miró 38, Centre Comercial Finestrelles, 08950 Esplugues de Llobregat", phone:"", lat:41.3750, lng:2.0870, types:["tienda","centro_comercial"], openSaturday:true, marcas:["Bicicletas","Accesorios ciclismo","Multideporte"], desc:"Tienda Decathlon en el centro comercial Finestrelles, con venta de bicicletas y equipamiento ciclista." },
+  { id: 914, name:"Decathlon Sant Boi (Centro Comercial Sant Boi)", location:"Barcelona", address:"Centro Comercial Sant Boi, 08830 Sant Boi de Llobregat", phone:"", lat:41.3430, lng:2.0400, types:["tienda","centro_comercial"], openSaturday:true, marcas:["Bicicletas","Accesorios ciclismo","Multideporte"], desc:"Tienda Decathlon situada en el Centro Comercial Sant Boi, con sección de bicicletas y ciclismo. Se marca como tienda en centro comercial, no como taller independiente." },
+  { id: 915, name:"Decathlon Tarragona (Les Gavarres)", location:"Tarragona", address:"Centro Comercial Les Gavarres, Ctra. Tarragona-Reus s/n, 43006 Tarragona", phone:"", lat:41.1430, lng:1.1990, types:["tienda","centro_comercial"], openSaturday:true, marcas:["Bicicletas","Accesorios ciclismo","Multideporte"], desc:"Gran tienda Decathlon dentro del complejo comercial Les Gavarres, con sección de bicicletas. Punto de venta en centro comercial, no taller independiente." },
+
+  // === PLEGABLES / FOLDING BIKES ESPECIALIZADAS ===
+  { id: 931, name:"Folding Bikes House - Brompton Barcelona Center", location:"Barcelona", address:"C/ Consell de Cent 72, 08015 Barcelona", phone:"+34 936 396 713", lat:41.3845, lng:2.1625, types:["tienda","plegable"], openSaturday:true, marcas:["Brompton","Bicicletas plegables urbanas"], desc:"Tienda oficial Brompton y especializada en bicicletas plegables en Barcelona (Folding Bikes House)." },
+  { id: 932, name:"Cap Problema - Brompton Premier Store", location:"Barcelona", address:"Avinguda Diagonal 380, 08037 Barcelona", phone:"+34 932 009 086", lat:41.3945, lng:2.1620, types:["tienda","plegable"], openSaturday:false, marcas:["Brompton","Plegables urbanas"], desc:"Tienda Brompton Premier Store en Barcelona, especializada en bicicletas plegables y servicio asociado." },
+  { id: 933, name:"eBici.cat Girona", location:"Girona", address:"C/ Joaquim Ruyra 10, 17002 Girona", phone:"+34 972 22 54 90", lat:41.9800, lng:2.8210, types:["tienda","plegable"], openSaturday:true, marcas:["Eléctricas plegables","Brompton","E-bikes"], desc:"Tienda especializada en bicicletas eléctricas y plegables en Girona, distribuidor oficial Brompton." },
+  { id: 934, name:"One Bike Flow", location:"Tarragona", address:"C/ Sir Esteve Morell Scott 17, 43480 Vila-seca, Tarragona", phone:"+34 640 23 77 71", lat:41.1120, lng:1.1450, types:["tienda","plegable"], openSaturday:true, marcas:["Plegables eléctricas","Urbanas","E-bikes"], desc:"Tienda de e-bikes y bicicletas plegables eléctricas en Vila-seca (Tarragona)." },
+
+  // === REFERENCIAS PLEGABLES EN ANDORRA ===
+  { id: 935, name:"JormaBike Plegables", location:"Andorra", address:"C/ Bonaventura Armengol 10, AD500 Andorra la Vella, Andorra", phone:"+376 741 778", lat:42.5075, lng:1.5215, types:["tienda","plegable"], openSaturday:true, marcas:["Plegables","Accesorios urbanos"], desc:"Sección de bicicletas plegables dentro de JormaBike en Andorra la Vella, según su catálogo online de plegables." },
+  { id:212, name:"Velodrom Odeón Girona", location:"Girona", address:"Barri Vell, Girona, Catalunya, España", phone:"", lat:41.9856, lng:2.8269, types:["tienda", "carretera", "gravel"], openSaturday:true, marcas:["Alta gama", "Boutique ciclista"], desc:"Boutique ciclista en el Barri Vell de Girona, especializada en bicicletas de carretera y gravel." },
+  { id:213, name:"Eat Sleep Cycle Girona", location:"Girona", address:"Girona, Catalunya, España", phone:"", lat:41.9793, lng:2.8199, types:["tienda", "carretera", "gravel", "mtb"], openSaturday:true, marcas:["Tours", "Alquiler", "Taller propio"], desc:"Tienda y centro de tours ciclistas en Girona con venta, alquiler y taller de bicicletas." },
+  { id:214, name:"Dos Off Track Girona", location:"Girona", address:"Barri Vell, Girona, Catalunya, España", phone:"", lat:41.9856, lng:2.8269, types:["tienda", "mtb", "carretera"], openSaturday:true, marcas:["Taller especializado"], desc:"Taller de confianza en el Barri Vell de Girona, con servicio muy orientado a ciclistas exigentes." },
+  { id:215, name:"Cicles Sport Reus", location:"Tarragona", address:"Carrer del Doctor Robert 22, 43201 Reus, Tarragona, España", phone:"", lat:41.1574, lng:1.1095, types:["tienda", "carretera", "mtb"], openSaturday:true, marcas:["Bicicletas y componentes"], desc:"Tienda de ciclismo en Reus con venta de bicicletas y servicio de taller." },
+  { id:216, name:"Bike Taller Reus", location:"Tarragona", address:"Avinguda Maria Fortuny 12, 43204 Reus, Tarragona, España", phone:"", lat:41.1606, lng:1.122, types:["tienda", "mtb"], openSaturday:true, marcas:["Cannondale", "Mondraker", "Coluer"], desc:"Tienda de ciclismo en Reus especializada en MTB y servicio de taller." },
+  { id:217, name:"Edibikes Figueres", location:"Girona", address:"Avinguda de Roses 71, 17600 Figueres, Girona, España", phone:"", lat:42.2676, lng:2.9967, types:["tienda", "carretera", "mtb", "electrica"], openSaturday:true, marcas:["Varias modalidades", "Taller propio"], desc:"Tienda de bicicletas en Figueres con venta, alquiler y reparación para distintas modalidades." },
+  { id:218, name:"Surià Bicis Figueres", location:"Girona", address:"Figueres, Girona, España", phone:"", lat:42.2666, lng:2.9638, types:["tienda"], openSaturday:true, marcas:["Componentes", "Accesorios"], desc:"Tienda de bicicletas en Figueres con venta de bicis, componentes y reparaciones." },
+  { id:219, name:"Biking Point Mataró", location:"Barcelona", address:"Camí de la Geganta 111, 08302 Mataró, Barcelona, España", phone:"", lat:41.5412, lng:2.4367, types:["tienda", "mtb", "carretera"], openSaturday:true, marcas:["Biking Point"], desc:"Tienda Biking Point en Mataró con exposición de bicicletas y servicio de taller." },
+  { id:220, name:"CanBike Mataró", location:"Barcelona", address:"Via Europa 189, 08304 Mataró, Barcelona, España", phone:"", lat:41.5447, lng:2.4337, types:["tienda", "mtb", "carretera"], openSaturday:true, marcas:["Santa Cruz", "Olympia", "Mendiz"], desc:"Tienda y taller de bicicletas en Mataró, centro oficial de varias marcas." },
+  { id:221, name:"9Transport Mataró", location:"Barcelona", address:"Camí del Mig 133, 08303 Mataró, Barcelona, España", phone:"", lat:41.5336, lng:2.4245, types:["tienda", "electrica", "plegable"], openSaturday:true, marcas:["Urbanas", "Plegables", "E-bikes"], desc:"Tienda en Mataró especializada en bicicletas urbanas, plegables y eléctricas." },
+  { id:222, name:"Andshock La Massana", location:"Andorra", address:"Av. Sant Antoni 38, AD400 La Massana, Andorra", phone:"", lat:42.5424, lng:1.5173, types:["tienda", "mtb"], openSaturday:true, marcas:["MTB", "Componentes"], desc:"Tienda en La Massana centrada en bicicletas de montaña y componentes." },
+  { id:223, name:"Com Nou Andorra", location:"Andorra", address:"Av. Tarragona 47, AD500 Andorra la Vella, Andorra", phone:"", lat:42.5055, lng:1.5296, types:["tienda"], openSaturday:true, marcas:["Bicis y accesorios"], desc:"Comercio en Andorra la Vella con sección de bicicletas y accesorios deportivos." },
+  { id:224, name:"Couloir Andorra", location:"Andorra", address:"Av. del Ravell 12, AD400 La Massana, Andorra", phone:"", lat:42.5501, lng:1.5114, types:["tienda", "mtb"], openSaturday:true, marcas:["MTB", "Outdoor"], desc:"Tienda en La Massana dedicada a MTB y equipamiento outdoor." },
+  { id:225, name:"Esports Elit Canillo", location:"Andorra", address:"Av. Sant Joan de Caselles, AD100 Canillo, Andorra", phone:"", lat:42.5658, lng:1.5977, types:["tienda", "mtb", "carretera"], openSaturday:true, marcas:["Bicis y outdoor"], desc:"Tienda de deportes en Canillo con oferta de bicicletas de montaña y carretera." },
+  { id:226, name:"Intersport Outdoor Andorra", location:"Andorra", address:"Av. de Santa Coloma 118, AD500 Andorra la Vella, Andorra", phone:"", lat:42.4999, lng:1.507, types:["tienda"], openSaturday:true, marcas:["Outdoor", "Bicis"], desc:"Tienda Intersport en Andorra la Vella con sección de ciclismo y outdoor." },
+  { id:227, name:"Pic Negre La Massana", location:"Andorra", address:"Av. de Sant Antoni 5, AD400 La Massana, Andorra", phone:"", lat:42.5383, lng:1.5196, types:["tienda", "mtb"], openSaturday:true, marcas:["Alquiler MTB", "Accesorios"], desc:"Punto de alquiler y tienda de bicicletas en La Massana." },
+  { id:228, name:"Triatló Bike Sport", location:"Andorra", address:"Av. de les Escoles 8, AD700 Escaldes-Engordany, Andorra", phone:"", lat:42.5096, lng:1.5409, types:["tienda", "carretera", "mtb"], openSaturday:true, marcas:["Triatlón", "Carretera"], desc:"Tienda en Escaldes-Engordany orientada a triatlón y ciclismo." },
+  { id:229, name:"Esports Rossell La Massana", location:"Andorra", address:"Av. del Ravell 30, AD400 La Massana, Andorra", phone:"", lat:42.55, lng:1.5119, types:["tienda", "mtb"], openSaturday:true, marcas:["MTB", "Accesorios"], desc:"Tienda de deportes en La Massana con sección de bicicletas." },
+  // === DISTRIBUIDORES MAYORISTAS DE PIEZAS ===
+  { id:230, name:"Casa Masferrer (Massi)", location:"Barcelona", address:"Av. Sant Julià 260, Pol. Ind. Congost, 08403 Granollers, Barcelona", phone:"", lat:41.5954, lng:2.2785, types:["distribuidor"], openSaturday:false, marcas:["Massi", "Componentes"], desc:"Histórico distribuidor mayorista de material de ciclismo, piezas y accesorios. Fabricante de la marca Massi." },
+  { id:231, name:"Team Bike", location:"Barcelona", address:"C/ de la Lletra C, Pol. Ind. Zona Franca, 08040 Barcelona", phone:"", lat:41.3283, lng:2.1384, types:["distribuidor"], openSaturday:false, marcas:["SRAM", "RockShox", "Troy Lee"], website:"https://teambike.com", desc:"Uno de los distribuidores de marcas premium de bicicletas y accesorios más grandes de España y Portugal." },
+  { id:232, name:"Top Fun", location:"Barcelona", address:"C/ Barcelonès s/n, Pol. Ind. La Borda, 08140 Caldes de Montbui, Barcelona", phone:"", lat:41.621, lng:2.1645, types:["distribuidor"], openSaturday:false, marcas:["WTB", "Ergon", "Knog"], desc:"Especialistas en la distribución de material premium de ciclismo con más de 35 años de experiencia." },
+  { id:233, name:"CDC Sport", location:"Barcelona", address:"Viladecans, Barcelona", phone:"", lat:41.3142, lng:2.015, types:["distribuidor"], openSaturday:false, marcas:["Castelli", "Alpinestars", "Selle Italia"], desc:"Distribuidor oficial mayorista de grandes marcas de componentes, ropa y nutrición para España y Andorra." },
+  { id:234, name:"Vic Sports Afers", location:"Girona", address:"Riudaura, Girona", phone:"", lat:42.1884, lng:2.4087, types:["distribuidor"], openSaturday:false, marcas:["Componentes", "Nutrición"], desc:"Mayorista y distribuidor de piezas, cascos, calzado y complementos en la zona de Girona." },
+  // === NUEVAS TIENDAS TARRAGONA ===
+  { id:235, name:"SPORTS BRULL", location:"Tarragona", address:"Avenida Comarques Catalanes 3, 43740 Móra d'Ebre, Tarragona", phone:"", lat:41.0852, lng:0.6275, types:["tienda"], openSaturday:true, marcas:["Deportes", "Bicicletas"], desc:"Tienda de deporte con sección y accesorios para bicicletas en Móra d'Ebre." },
+  { id:236, name:"OR Bikes", location:"Tarragona", address:"Passeig de les Escoles 40, 43570 Santa Bàrbara, Tarragona", phone:"", lat:40.7173, lng:0.4972, types:["tienda"], openSaturday:true, marcas:["Bicicletas", "Ciclismo"], desc:"Tienda especializada en bicicletas, reparación y ciclismo en Santa Bàrbara." }
 ];
 
 // =======================================================================
@@ -436,7 +536,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 function initMap() {
   map = L.map('map', { center: [41.9, 1.5], zoom: 8, zoomControl: false });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>', subdomains: 'abcd', maxZoom: 19
   }).addTo(map);
   L.control.zoom({ position: 'bottomleft' }).addTo(map);
@@ -444,9 +544,10 @@ function initMap() {
   shops.forEach(shop => {
     const color = getProvinceColor(shop.location);
     const isOficial = shop.types.includes('oficial');
-    const size = isOficial ? 14 : 10;
-    const pulseClass = isOficial ? 'pulse-marker' : '';
-    const markerHtml = `<div class="${pulseClass}" style="background: ${color}; width: ${size}px; height: ${size}px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 8px rgba(0,0,0,0.5);"></div>`;
+    const size = Math.round((isOficial ? 24 : 20) * 1.2);
+    const pulseClass = 'pulse-marker';
+    const bikeSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="18.5" cy="17.5" r="3.5"></circle><path d="M15 6h-4l-2 6"></path><path d="M9 8h6l3.5 9.5"></path><path d="M12 14h6"></path></svg>`;
+    const markerHtml = `<div class="bike-pin ${pulseClass}" style="background:${color}; color:#fff;">${bikeSvg}</div>`;
     const icon = L.divIcon({ html: markerHtml, className: '', iconSize: [size, size], iconAnchor: [size/2, size/2], popupAnchor: [0, -size/2] });
     const marker = L.marker([shop.lat, shop.lng], { icon }).addTo(map);
     const popupContent = `
@@ -455,6 +556,8 @@ function initMap() {
         <div class="popup-info"><i class="fas fa-map-marker-alt"></i>${shop.address}, ${shop.location}</div>
         <div class="popup-info"><i class="fas fa-phone"></i><a href="tel:${shop.phone}" style="color: var(--primary); text-decoration: none;">${shop.phone}</a></div>
         <div class="popup-info"><i class="fas fa-tools"></i>${shop.desc}</div>
+        ${shop.website ? `<div class="popup-info" style="margin-top:6px;"><i class="fas fa-globe"></i> <a href="${shop.website}" target="_blank" rel="noopener noreferrer" style="color:var(--primary);text-decoration:none;font-weight:600;">Web Oficial</a></div>` : ""}
+        ${shop.instagram ? `<div class="popup-info"><i class="fab fa-instagram"></i> <a href="${shop.instagram}" target="_blank" rel="noopener noreferrer" style="color:var(--primary);text-decoration:none;font-weight:600;">Instagram</a></div>` : ""}
         <div class="popup-info"><i class="fas fa-calendar-week"></i>${shop.openSaturday ? 'Abre sábado' : 'Cerrado sábado'}</div>
         ${shop.marcas.length > 0 ? `<div class="popup-marcas"><h4>Marcas / Servicios</h4><div class="marcas-list">${shop.marcas.map(m => `<span class="marca-badge">${m}</span>`).join('')}</div></div>` : ''}
         <a href="https://www.google.com/maps/dir/?api=1&destination=${shop.lat},${shop.lng}" target="_blank" class="popup-directions"><i class="fas fa-directions"></i> Cómo llegar</a>
@@ -503,6 +606,10 @@ function renderShopList(filteredShops) {
         <span class="shop-province ${getProvinceClass(shop.location)}">${shop.location}</span>
       </div>
       <div class="shop-contact"><div><i class="fas fa-map-pin"></i> ${shop.address}</div></div>
+          <div class="shop-contact" style="margin-top:6px;">
+            ${shop.website ? `<a href="${shop.website}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-right:8px; color:var(--primary); text-decoration:none; font-size:0.85rem;"><i class="fas fa-globe"></i> Web</a>` : ""}
+            ${shop.instagram ? `<a href="${shop.instagram}" target="_blank" rel="noopener noreferrer" style="display:inline-block; color:var(--primary); text-decoration:none; font-size:0.85rem;"><i class="fab fa-instagram"></i> Instagram</a>` : ""}
+          </div>
       <div class="shop-desc">${shop.desc}</div>
       <div class="shop-tags">${ratingTag} ${typeTags} ${displayMarcas} ${extraMarcas} ${satTag} ${distanceTag}</div>`;
     item.addEventListener('click', () => { flyToShop(shop.id); });
