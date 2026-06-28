@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiendas y talleres de reparación de bicicletas en Cataluña y Andorra | Carbono, pintura e infantiles</title>
+
+<title>Tiendas y Talleres de Reparación de Bicicletas en Cataluña y Andorra (2026)</title>
+<meta name="description" content="Directorio definitivo 2026 de tiendas de bicicletas, talleres de reparación, e-bikes, cargo bikes y distribuidores en Cataluña y Andorra. Filtra por especialidad, apertura en sábado y más.">
+<meta name="keywords" content="reparación bicicletas cataluña, taller bicicletas andorra, tienda bicicletas, e-bikes barcelona, cargo bike girona, distribuidores ciclismo tarragona">
+<meta property="og:title" content="Directorio de Tiendas y Talleres de Bicicletas en Cataluña y Andorra">
+<meta property="og:description" content="Encuentra fácilmente talleres y tiendas especializadas en ciclismo, reparación de carbono, plegables y eléctricas en toda Cataluña y Andorra.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -423,6 +431,7 @@
   <aside class="sidebar" id="sidebar">
     <button class="close-sidebar" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
     <div class="sidebar-controls">
+      <section aria-label="Búsqueda de talleres">
       <div class="search-box">
         <i class="fas fa-search"></i>
         <input type="text" id="searchInput" placeholder="Buscar nombre, ciudad, marca..." oninput="filterShops()" />
@@ -439,7 +448,7 @@
         </div>
       </div>
       <div class="filter-group">
-        </div><div class="sidebar-section"><div class="sidebar-section-title">Especialidad / Horario <span class="count">Filtros</span></div>
+        </div><div class="sidebar-section"><h2 class="sidebar-section-title">Especialidad / Horario <span class="count">Filtros</span></h2>
         <div class="filter-buttons" id="typeFilters">
           <button class="filter-btn type-filter-btn active" data-filter="all" onclick="setTypeFilter('all', this)">Todos</button>
           <button class="filter-btn type-filter-btn" data-filter="electrica" onclick="setTypeFilter('electrica', this)">Eléctricas</button>
@@ -472,7 +481,8 @@
       </div>
 
     </div>
-    <div class="shop-list" id="shopList"></div>
+    <h2 class="sr-only" style="position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0, 0, 0, 0); border:0;">Resultados de tiendas y talleres</h2>
+        <div class="shop-list" id="shopList"></div>
   </aside>
   <div class="map-container">
     <div id="map"></div>
@@ -481,7 +491,7 @@
       <button class="map-btn" onclick="resetView()" title="Vista General"><i class="fas fa-globe-europe"></i></button>
     </div>
     <div class="map-legend" id="mapLegendPanel"><button type="button" id="closeMapLegend" aria-label="Cerrar leyenda" style="position:absolute;top:8px;right:8px;background:transparent;border:0;color:#fff;font-size:18px;line-height:1;cursor:pointer;z-index:9999;pointer-events:auto;">×</button><div style="font-size:8px;color:#ddd;margin-bottom:8px;font-style:italic;">Las entradas marcadas como centro comercial son tiendas y no centros de reparación.</div>
-      <div class="sidebar-section"><div class="sidebar-section-title">Provincias <span class="count">Zona</span></div>
+      <div class="sidebar-section"><h2 class="sidebar-section-title">Provincias <span class="count">Zona</span></h2>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-barcelona);"></div>Barcelona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-girona);"></div>Girona</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--cat-lleida);"></div>Lleida</div>
