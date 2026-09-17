@@ -84,18 +84,7 @@
   .brand-text .subtitle{ margin:1px 0 0; font-size:.74rem; color:#C9D6CB; font-weight:500; }
   .header-count{ flex:none; background:var(--pine); color:#fff; font-weight:700; font-size:.78rem; padding:6px 11px; border-radius:999px; white-space:nowrap; }
 
-  /* ---------- TOOLBAR ---------- */
-  .toolbar{ max-width:1320px; margin:0 auto; padding:var(--sp-3) var(--sp-4) 0; }
-  .search-row{ display:flex; gap:var(--sp-2); }
-  .search-field{ position:relative; flex:1 1 auto; min-width:0; }
-  .search-field svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--muted); pointer-events:none; }
-  #searchInput{ width:100%; padding:12px 14px 12px 38px; border-radius:var(--radius-md); border:1.5px solid var(--line); background:var(--paper-raised); font-size:.95rem; color:var(--ink); }
-  #searchInput::placeholder{ color:var(--muted); }
-  #searchInput:focus{ border-color:var(--pine); }
-  .btn-icon-square{ flex:none; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius-md); border:1.5px solid var(--line); background:var(--paper-raised); color:var(--ink-soft); cursor:pointer; }
-  .btn-icon-square svg{ width:19px; height:19px; }
-  .btn-icon-square[aria-pressed="true"]{ background:var(--pine); border-color:var(--pine); color:#fff; }
-  .btn-filter-toggle{ flex:none; display:flex; align-items:center; gap:6px; background:var(--pine-dark); color:#fff; border:none; border-radius:var(--radius-md); padding:0 16px; height:44px; font-weight:600; font-size:.88rem; cursor:pointer; }
+  /* ---------- TOOLBAR (llegat: classes reutilitzades pels controls d'ordenació/reset) ---------- */
   .badge{ background:var(--brick); color:#fff; font-size:.68rem; font-weight:700; border-radius:999px; min-width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; padding:0 5px; }
 
   .toolbar-row2{ display:flex; align-items:center; gap:var(--sp-2); margin-top:var(--sp-2); flex-wrap:wrap; }
@@ -109,6 +98,47 @@
   #sortSelect{ border:1.5px solid var(--line); background:var(--paper-raised); border-radius:var(--radius-md); padding:8px 10px; font-size:.82rem; font-weight:600; color:var(--ink); }
   .btn-reset{ flex:none; background:none; border:1.5px solid var(--line); color:var(--ink-soft); border-radius:var(--radius-md); padding:8px 12px; font-size:.8rem; font-weight:600; cursor:pointer; }
   .btn-reset:hover{ border-color:var(--brick); color:var(--brick); }
+  .btn-reset[hidden]{ display:none; }
+
+  /* ---------- HERO (primer pantallazo) ---------- */
+  .hero{ background:linear-gradient(180deg,var(--pine-dark) 0%,#1c4636 100%); color:#F3F1E8; padding:var(--sp-5) var(--sp-4) var(--sp-6); }
+  .hero-inner{ max-width:900px; margin:0 auto; }
+  .hero h1{ font-family:var(--font-display); font-weight:700; font-size:1.5rem; line-height:1.25; margin:0 0 6px; letter-spacing:-.01em; }
+  .hero-subtitle{ margin:0 0 var(--sp-2); font-size:.92rem; color:#CFE0D4; }
+  .hero-count{ margin:0 0 var(--sp-4); font-size:.8rem; color:#AFC9B7; }
+  .hero-count strong{ color:#fff; font-size:.88rem; }
+  .hero-search{ position:relative; margin-bottom:var(--sp-3); }
+  .hero-search svg{ position:absolute; left:14px; top:50%; transform:translateY(-50%); width:20px; height:20px; color:var(--muted); pointer-events:none; }
+  .hero-search input{ width:100%; padding:15px 16px 15px 42px; border-radius:var(--radius-md); border:none; background:var(--paper-raised); font-size:1rem; color:var(--ink); box-shadow:var(--shadow-card); }
+  .hero-search input::placeholder{ color:var(--muted); }
+  .hero-ctas{ display:flex; gap:var(--sp-2); margin-bottom:var(--sp-2); }
+  .cta-btn{ flex:1; display:flex; align-items:center; justify-content:center; gap:7px; height:52px; border-radius:var(--radius-md); font-weight:700; font-size:.95rem; cursor:pointer; border:none; }
+  .cta-btn svg{ width:20px; height:20px; flex:none; }
+  .cta-primary{ background:#fff; color:var(--pine-dark); }
+  .cta-primary[aria-pressed="true"]{ background:var(--gold); color:#fff; }
+  .cta-secondary{ background:rgba(255,255,255,.14); color:#fff; border:1.5px solid rgba(255,255,255,.4); }
+  .cta-secondary .badge{ background:var(--gold); }
+  .btn-find-nearest{ display:flex; align-items:center; gap:6px; background:none; border:none; color:#EAF3ED; font-weight:600; font-size:.85rem; text-decoration:underline; text-decoration-color:rgba(234,243,237,.5); cursor:pointer; padding:var(--sp-2) 0 var(--sp-3); }
+  .btn-find-nearest svg{ width:15px; height:15px; }
+  .quick-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+  .quick-chip{ background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.35); color:#fff; border-radius:999px; padding:7px 13px; font-size:.78rem; font-weight:600; cursor:pointer; }
+  .quick-chip[aria-pressed="true"]{ background:#fff; color:var(--pine-dark); border-color:#fff; }
+
+  /* ---------- RESULTS TOOLBAR (view switcher + reset + sort) ---------- */
+  .results-toolbar{ max-width:1320px; margin:0 auto; padding:var(--sp-3) var(--sp-4) 0; display:flex; align-items:center; gap:var(--sp-2); flex-wrap:wrap; }
+  .view-switcher{ display:inline-flex; border:1.5px solid var(--line); border-radius:var(--radius-md); overflow:hidden; flex:none; }
+  .view-switcher button{ background:var(--paper-raised); border:none; padding:8px 13px; font-size:.8rem; font-weight:600; color:var(--ink-soft); cursor:pointer; border-right:1px solid var(--line); }
+  .view-switcher button:last-child{ border-right:none; }
+  .view-switcher button[aria-pressed="true"]{ background:var(--pine-dark); color:#fff; }
+  .active-filters-row{ max-width:1320px; margin:0 auto; padding:var(--sp-2) var(--sp-4) 0; display:flex; flex-wrap:wrap; gap:6px; }
+  .active-filter-chip{ display:inline-flex; align-items:center; gap:5px; background:var(--pine-tint); color:var(--pine-dark); border-radius:999px; padding:5px 6px 5px 11px; font-size:.76rem; font-weight:600; }
+  .active-filter-chip button{ background:rgba(33,80,58,.15); border:none; border-radius:999px; width:18px; height:18px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--pine-dark); }
+  .active-filter-chip button svg{ width:10px; height:10px; }
+  .todo-filter-chip{ opacity:.55; cursor:not-allowed; position:relative; }
+  .todo-filter-note{ font-size:.68rem; color:var(--muted); margin:2px 0 0; font-style:italic; }
+  .btn-back-to-list{ display:none; position:absolute; left:10px; top:10px; z-index:500; background:var(--paper-raised); border:1.5px solid var(--line); border-radius:var(--radius-md); padding:9px 14px; font-size:.82rem; font-weight:700; color:var(--pine-dark); align-items:center; gap:6px; cursor:pointer; box-shadow:var(--shadow-card); }
+  .main-layout.view-map .btn-back-to-list{ display:flex; }
+  .btn-back-to-list svg{ width:16px; height:16px; }
 
   /* ---------- FILTER DRAWER ---------- */
   .drawer-overlay{ position:fixed; inset:0; background:rgba(27,36,48,.45); z-index:40; }
@@ -131,6 +161,12 @@
 
   /* ---------- MAIN LAYOUT (mobile-first: map, then list) ---------- */
   .main-layout{ max-width:1320px; margin:var(--sp-4) auto 0; padding:0 var(--sp-4); display:flex; flex-direction:column; gap:var(--sp-4); }
+  /* Selector de vistes (mòbil/tablet): per defecte es mostren totes dues seccions
+     apilades (comportament "Dividit"); els modes "Llista" i "Mapa" n'amaguen una. */
+  .main-layout.view-list .map-panel{ display:none; }
+  .main-layout.view-map .results-panel{ display:none; }
+  .main-layout.view-map .map-panel{ position:relative; }
+  .main-layout.view-map .map{ height:calc(100vh - 220px); max-height:none; }
   .map-panel{ order:0; scroll-margin-top:76px; }
   .map{ width:100%; height:42vh; min-height:260px; max-height:420px; border-radius:var(--radius-lg); border:1px solid var(--line); background:var(--line-soft); overflow:hidden; position:relative; z-index:1; }
   .map-hint{ font-size:.72rem; color:var(--muted); margin:var(--sp-2) 0 0; text-align:center; }
@@ -224,11 +260,11 @@
   }
 
   @media (min-width:768px){
-    .toolbar{ padding-top:var(--sp-4); }
+    .results-toolbar{ padding-top:var(--sp-4); }
     .filter-drawer{ position:static; transform:none!important; box-shadow:none; border:1px solid var(--line); border-radius:var(--radius-lg); max-height:none; overflow:visible; margin-top:var(--sp-3); padding:var(--sp-4) var(--sp-5); }
     .drawer-handle,.btn-close-drawer{ display:none; }
     .drawer-overlay{ display:none!important; }
-    .btn-filter-toggle{ display:none; }
+    #filterToggleBtn{ display:none; }
     .drawer-header h2{ font-size:1rem; }
     .filter-drawer .filter-groups{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:var(--sp-5); }
     .drawer-footer{ grid-column:1/-1; margin-top:var(--sp-2); max-width:320px; }
@@ -236,7 +272,11 @@
   }
 
   @media (min-width:1024px){
+    .view-switcher{ display:none; }
     .main-layout{ display:grid; grid-template-columns:minmax(400px,460px) 1fr; align-items:start; gap:var(--sp-5); margin-top:var(--sp-5); }
+    .main-layout.view-list .map-panel, .main-layout.view-map .results-panel{ display:block; }
+    .main-layout.view-map .map{ height:calc(100vh - 260px); max-height:760px; }
+    .btn-back-to-list{ display:none; }
     .results-panel{ order:0; max-height:calc(100vh - 220px); overflow-y:auto; padding-right:4px; }
     .cards-list{ grid-template-columns:1fr; }
     .map-panel{ order:1; position:sticky; top:96px; }
@@ -263,51 +303,77 @@
       </svg>
     </span>
     <div class="brand-text">
-      <h1>Tendes i tallers de bicicletes a Catalunya: Barcelona, Girona, Lleida, Tarragona i Andorra</h1>
-      <p class="subtitle">Directori amb negocis reals de reparació, manteniment i venda de bicicletes, verificats per cerca web</p>
+      <p class="subtitle" style="margin:0;font-size:.85rem;font-weight:700;color:#F3F1E8;">Bicis Catalunya i Andorra</p>
     </div>
-    <span class="header-count" id="headerCount">227</span>
   </div>
 </header>
 
-<section class="toolbar" aria-label="Cerca i filtres">
-  <div class="search-row">
-    <div class="search-field">
+<section class="hero" aria-label="Cerca ràpida">
+  <div class="hero-inner">
+    <h1>Troba botigues i tallers de bicicletes a Catalunya</h1>
+    <p class="hero-subtitle">Cerca establiments reals a Barcelona, Girona, Lleida, Tarragona i Andorra.</p>
+    <p class="hero-count"><strong id="headerCount">227</strong> establiments verificats</p>
+
+    <div class="hero-search">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
         <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <label for="searchInput" class="visually-hidden">Cercar per nom, municipi, comarca o servei</label>
-      <input type="search" id="searchInput" placeholder="Cerca nom, municipi, comarca, servei..." autocomplete="off">
+      <input type="search" id="searchInput" placeholder="Cerca per nom, municipi, comarca o servei" autocomplete="off">
     </div>
-    <button type="button" id="geoBtn" class="btn-icon-square" aria-pressed="false" aria-label="Utilitzar la meva ubicació">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <button type="button" id="routeNearestBtn" class="btn-icon-square" aria-label="Com arribar a la botiga més propera">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="19" r="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="5" r="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M6 16.8V13a4 4 0 0 1 4-4h4a4 4 0 0 0 4-4V3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <button type="button" id="filterToggleBtn" class="btn-filter-toggle" aria-expanded="false" aria-controls="filterDrawer">
-      Filtres <span class="badge" id="filterCountBadge" hidden>0</span>
-    </button>
-  </div>
 
-  <div class="toolbar-row2">
-    <p class="results-summary">Mostrant <strong id="resultsCountText">227</strong> tallers</p>
-    <button type="button" class="btn-toggle-parking" id="parkingToggleBtn" aria-pressed="false">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h3.5a2 2 0 010 4H9V8zm0 4v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Aparcaments de bicicletes
+    <div class="hero-ctas">
+      <button type="button" id="geoBtn" class="cta-btn cta-primary" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.8"/></svg>
+        Prop meu
+      </button>
+      <button type="button" id="filterToggleBtn" class="cta-btn cta-secondary" aria-expanded="false" aria-controls="filterDrawer">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M8 12h8M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Filtres <span class="badge" id="filterCountBadge" hidden>0</span>
+      </button>
+    </div>
+
+    <button type="button" id="routeNearestBtn" class="btn-find-nearest">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="19" r="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="5" r="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M6 16.8V13a4 4 0 0 1 4-4h4a4 4 0 0 0 4-4V3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Troba el taller més proper
     </button>
-    <button type="button" class="btn-reset" id="resetTopBtn">Restablir filtres</button>
-    <div class="sort-wrap">
-      <label for="sortSelect">Ordenar</label>
-      <select id="sortSelect">
-        <option value="relevance">Rellevància</option>
-        <option value="name">Nom (A-Z)</option>
-        <option value="distance" id="distanceOption" disabled>Distància</option>
-      </select>
+
+    <div class="quick-chips" id="quickChips" role="group" aria-label="Filtres ràpids de servei">
+      <button type="button" class="quick-chip" data-quick-service="Reparación" aria-pressed="false">Reparació</button>
+      <button type="button" class="quick-chip" data-quick-service="E-bikes" aria-pressed="false">E-bikes</button>
+      <button type="button" class="quick-chip" data-quick-service="MTB" aria-pressed="false">MTB</button>
+      <button type="button" class="quick-chip" data-quick-service="Gravel" aria-pressed="false">Gravel</button>
+      <button type="button" class="quick-chip" data-quick-service="Alquiler" aria-pressed="false">Lloguer</button>
+      <button type="button" class="quick-chip" data-quick-service="Bicicletas plegables" aria-pressed="false">Plegables</button>
     </div>
   </div>
 </section>
+
+<section class="results-toolbar" aria-label="Vista i ordenació de resultats">
+  <div class="view-switcher" role="group" aria-label="Canviar vista">
+    <button type="button" data-view="list" aria-pressed="true">Llista</button>
+    <button type="button" data-view="map" aria-pressed="false">Mapa</button>
+    <button type="button" data-view="split" aria-pressed="false">Dividit</button>
+  </div>
+  <p class="results-summary">Mostrant <strong id="resultsCountText">227</strong> tallers</p>
+  <button type="button" class="btn-toggle-parking" id="parkingToggleBtn" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h3.5a2 2 0 010 4H9V8zm0 4v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Aparcaments de bicicletes
+  </button>
+  <button type="button" class="btn-reset" id="resetTopBtn" hidden>Restablir filtres</button>
+  <div class="sort-wrap">
+    <label for="sortSelect">Ordenar</label>
+    <select id="sortSelect" aria-describedby="distanceHelp">
+      <option value="relevance">Rellevància</option>
+      <option value="name">Nom (A-Z)</option>
+      <option value="distance" id="distanceOption" disabled title="Activa &quot;Prop meu&quot; per ordenar per distància">Distància</option>
+    </select>
+    <span id="distanceHelp" class="visually-hidden">L'opció Distància només es pot fer servir després d'activar "Prop meu" i concedir permís d'ubicació.</span>
+  </div>
+</section>
+
+<div class="active-filters-row" id="activeFiltersRow" aria-live="polite"></div>
 
 <div class="drawer-overlay" id="drawerOverlay" hidden></div>
 
@@ -333,6 +399,20 @@
       <p class="filter-group-title">Serveis</p>
       <div class="chip-row" id="serviceChips" role="group" aria-label="Filtrar per serveis"></div>
     </div>
+    <div class="filter-group">
+      <!-- TODO: aquests filtres necessiten dades verificades (horaris en temps real,
+           política de cita prèvia, temps de reparació, servei de recollida) que encara
+           no formen part del dataset. Es mostren desactivats i sense comptar com a
+           filtres actius fins que hi hagi una font fiable per a cada negoci. -->
+      <p class="filter-group-title">Disponibilitat (aviat)</p>
+      <div class="chip-row" role="group" aria-label="Filtres de disponibilitat, encara no disponibles">
+        <button type="button" class="chip todo-filter-chip" disabled aria-disabled="true">Obert ara</button>
+        <button type="button" class="chip todo-filter-chip" disabled aria-disabled="true">Cita prèvia</button>
+        <button type="button" class="chip todo-filter-chip" disabled aria-disabled="true">Reparació ràpida</button>
+        <button type="button" class="chip todo-filter-chip" disabled aria-disabled="true">Recollida i lliurament</button>
+      </div>
+      <p class="todo-filter-note">Encara no disposem de dades verificades per a aquests filtres.</p>
+    </div>
   </div>
 
   <div class="drawer-footer">
@@ -341,8 +421,12 @@
   </div>
 </div>
 
-<main id="main" class="main-layout">
+<main id="main" class="main-layout view-list">
   <section class="map-panel" aria-label="Mapa de resultats">
+    <button type="button" class="btn-back-to-list" id="backToListBtn">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tornar als resultats
+    </button>
     <div id="map" class="map" role="application" aria-label="Mapa amb la ubicació dels tallers filtrats">
       <button type="button" class="locate-btn" id="mapLocateBtn" aria-label="Centrar el mapa a la meva ubicació" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -998,14 +1082,12 @@
       }
     }
 
-    // En mòbil/tablet (mapa i llistat apilats verticalment), en tocar una
-    // fitxa fem scroll cap al mapa perquè es vegi immediatament on és el
-    // taller, sense haver de pujar manualment.
+    // En mòbil/tablet (vista "Llista" per defecte, amb el mapa amagat),
+    // en tocar una fitxa o el botó "Al mapa" canviem a la vista "Mapa"
+    // perquè el marcador es vegi immediatament. En "Dividit" (escriptori)
+    // el mapa ja és sempre visible, així que només cal centrar-hi.
     if(opts.scrollMapIntoView && window.innerWidth < 1024){
-      var mapPanel = document.querySelector(".map-panel");
-      if(mapPanel && typeof mapPanel.scrollIntoView === "function"){
-        mapPanel.scrollIntoView({ behavior:"smooth", block:"start" });
-      }
+      setViewMode("map");
     }
 
     var marker = markersById[id];
@@ -1254,6 +1336,118 @@
     var count = state.types.length + state.services.length + (state.province!=="all" ? 1:0);
     var badge = document.getElementById("filterCountBadge");
     if(count>0){ badge.hidden=false; badge.textContent=count; } else { badge.hidden=true; }
+
+    var resetBtn = document.getElementById("resetTopBtn");
+    var anyActive = count > 0 || !!state.query;
+    resetBtn.hidden = !anyActive;
+
+    renderActiveFiltersChips();
+    syncQuickChips();
+  }
+
+  function closeIconSvg(){
+    return '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+  }
+
+  /* Xips de filtres actius, eliminables individualment, mostrats sobre els
+     resultats. Reutilitzen exactament el mateix estat que el calaix de
+     filtres: eliminar un xip aquí equival a desmarcar-lo al calaix. */
+  function renderActiveFiltersChips(){
+    var row = document.getElementById("activeFiltersRow");
+    if(!row) return;
+    var chips = [];
+
+    if(state.province !== "all"){
+      chips.push({ label: provinceLabel(state.province), onRemove: function(){
+        state.province = "all";
+        renderProvinceChips();
+        syncProvinceToURL();
+      }});
+    }
+    state.types.forEach(function(t){
+      chips.push({ label: trType(t), onRemove: function(){
+        var idx = state.types.indexOf(t);
+        if(idx !== -1) state.types.splice(idx,1);
+        renderTypeChips();
+      }});
+    });
+    state.services.forEach(function(sv){
+      chips.push({ label: trService(sv), onRemove: function(){
+        var idx = state.services.indexOf(sv);
+        if(idx !== -1) state.services.splice(idx,1);
+        renderServiceChips();
+      }});
+    });
+
+    if(chips.length === 0){ row.innerHTML = ""; return; }
+
+    row.innerHTML = chips.map(function(c, i){
+      return '<span class="active-filter-chip">'+escapeHTML(c.label)+
+        '<button type="button" data-chip-index="'+i+'" aria-label="Treure filtre '+escapeHTML(c.label)+'">'+closeIconSvg()+'</button></span>';
+    }).join("");
+
+    Array.prototype.forEach.call(row.querySelectorAll("button[data-chip-index]"), function(btn){
+      var i = Number(btn.getAttribute("data-chip-index"));
+      btn.addEventListener("click", function(){
+        chips[i].onRemove();
+        state.visibleCount = PAGE_SIZE;
+        refresh();
+      });
+    });
+  }
+
+  /* Sincronitza l'estat premut dels xips ràpids de l'hero amb state.services,
+     ja que ambdós controlen el mateix filtre. */
+  function syncQuickChips(){
+    var quick = document.getElementById("quickChips");
+    if(!quick) return;
+    Array.prototype.forEach.call(quick.querySelectorAll(".quick-chip"), function(btn){
+      var sv = btn.getAttribute("data-quick-service");
+      btn.setAttribute("aria-pressed", state.services.indexOf(sv) !== -1 ? "true" : "false");
+    });
+  }
+
+  function initQuickChips(){
+    var quick = document.getElementById("quickChips");
+    if(!quick) return;
+    Array.prototype.forEach.call(quick.querySelectorAll(".quick-chip"), function(btn){
+      btn.addEventListener("click", function(){
+        var sv = btn.getAttribute("data-quick-service");
+        var idx = state.services.indexOf(sv);
+        if(idx === -1) state.services.push(sv); else state.services.splice(idx,1);
+        state.visibleCount = PAGE_SIZE;
+        renderServiceChips();
+        refresh();
+      });
+    });
+  }
+
+  /* =========================================================
+     9c. SELECTOR DE VISTES (Llista / Mapa / Dividit)
+     ---------------------------------------------------------
+     Només té efecte per sota de 1024px: a partir d'aquest ample
+     el CSS ja mostra sempre llistat + mapa en dues columnes
+     ("Dividit" forçat), i el propi selector es queda amagat.
+     ========================================================= */
+  function setViewMode(mode){
+    var main = document.getElementById("main");
+    if(!main) return;
+    main.classList.remove("view-list", "view-map", "view-split");
+    main.classList.add("view-" + mode);
+    Array.prototype.forEach.call(document.querySelectorAll(".view-switcher button"), function(btn){
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-view") === mode ? "true" : "false");
+    });
+    if(mode === "map"){ setTimeout(invalidateMapSize, 50); }
+  }
+
+  function initViewSwitcher(){
+    Array.prototype.forEach.call(document.querySelectorAll(".view-switcher button"), function(btn){
+      btn.addEventListener("click", function(){
+        setViewMode(btn.getAttribute("data-view"));
+      });
+    });
+    var backBtn = document.getElementById("backToListBtn");
+    if(backBtn) backBtn.addEventListener("click", function(){ setViewMode("list"); });
   }
 
   /* =========================================================
