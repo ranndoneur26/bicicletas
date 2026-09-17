@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bicicletas-one.vercel.app/sitemap.xml

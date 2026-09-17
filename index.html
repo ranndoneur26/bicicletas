@@ -13,12 +13,34 @@
 <meta property="og:title" content="Tendes de bicicletes a Catalunya: Barcelona, Girona, Lleida, Tarragona i Andorra">
 <meta property="og:description" content="Troba tendes i tallers de bicicletes REALS (tiendas de bicicletas) a prop teu: Barcelona, Girona, Lleida, Tarragona i Andorra, amb mapa, filtres i geolocalització.">
 <meta property="og:url" content="https://bicicletas-one.vercel.app/">
+<meta property="og:image" content="https://bicicletas-one.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tendes i tallers de bicicletes reals a Catalunya i Andorra">
 <meta property="og:locale" content="ca_ES">
 <meta property="og:locale:alternate" content="es_ES">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tendes de bicicletes a Catalunya i Andorra">
 <meta name="twitter:description" content="Tendes i tallers de bicicletes reals a Barcelona, Girona, Lleida, Tarragona i Andorra.">
+<meta name="twitter:image" content="https://bicicletas-one.vercel.app/og-image.png">
 <meta name="theme-color" content="#21503A">
+
+<!-- CSP via meta tag: mitigació parcial. Una capçalera HTTP CSP seria
+     més forta (permet nonces/hash reals i no es pot desactivar des del
+     mateix document), però com que aquest fitxer es distribueix com a
+     HTML estàtic sense servidor propi, aquesta és la protecció que es
+     pot oferir sense trencar l'script principal (que és inline). -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://unpkg.com;
+  style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com;
+  font-src https://fonts.gstatic.com;
+  img-src 'self' data: https://*.tile-cyclosm.openstreetmap.fr https://*.tile.openstreetmap.fr https://*.tile.opentopomap.org https://*.tile.openstreetmap.org;
+  connect-src 'self' https://nominatim.openstreetmap.org https://router.project-osrm.org;
+  object-src 'none';
+  base-uri 'self';
+  frame-ancestors 'self';
+">
 
 <script type="application/ld+json">
 {
@@ -42,8 +64,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" integrity="sha256-YU3qCpj/P06tdPBJGPax0bm6Q1wltfwjsho5TR4+TYc=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" integrity="sha256-YSWCMtmNZNwqex4CEw1nQhvFub2lmU7vcCKP+XVwwXA=" crossorigin="anonymous">
 
 <style>
   :root{
@@ -190,7 +212,7 @@
   .results-panel{ order:1; min-width:0; }
   .cards-list{ display:flex; flex-direction:column; gap:var(--sp-3); }
 
-  .shop-card{ background:var(--paper-raised); border:1.5px solid var(--line); border-radius:var(--radius-md); box-shadow:var(--shadow-card); padding:var(--sp-3) var(--sp-4); cursor:pointer; scroll-margin-top:90px; transition:border-color .15s ease, box-shadow .15s ease; }
+  .shop-card{ background:var(--paper-raised); border:1.5px solid var(--line); border-radius:var(--radius-md); box-shadow:var(--shadow-card); padding:var(--sp-3) var(--sp-4); cursor:pointer; scroll-margin-top:90px; transition:border-color .15s ease, box-shadow .15s ease; content-visibility:auto; contain-intrinsic-size:0 190px; }
   .shop-card:hover{ border-color:var(--pine); }
   .shop-card.is-active{ border-color:var(--pine); box-shadow:0 0 0 3px var(--pine-tint); }
   .shop-card-top{ display:flex; justify-content:space-between; gap:var(--sp-3); }
@@ -204,7 +226,8 @@
   .tag{ font-size:.7rem; font-weight:600; padding:3px 9px; border-radius:999px; background:#EEEAE0; color:var(--ink-soft); white-space:nowrap; }
   .tag.tag-featured{ background:var(--brick-tint); color:var(--brick); }
   .shop-card-footer{ display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-2); margin-top:var(--sp-2); flex-wrap:wrap; }
-  .shop-address{ font-size:.74rem; color:var(--muted); display:flex; align-items:flex-start; gap:5px; flex:1 1 auto; min-width:0; }
+  .shop-address{ font-size:.74rem; color:var(--muted); display:flex; align-items:flex-start; gap:5px; flex:1 1 auto; min-width:0; flex-wrap:wrap; }
+  .geo-pending-tag{ font-style:normal; color:#8A6D1D; background:#FBF1D6; border-radius:4px; padding:0 4px; white-space:nowrap; }
   .shop-address svg{ width:13px; height:13px; flex:none; margin-top:1px; }
   .shop-card-actions{ display:flex; gap:6px; flex:none; }
   .btn-locate-card{ flex:none; display:flex; align-items:center; gap:5px; background:var(--paper); border:1px solid var(--line); color:var(--pine-dark); border-radius:var(--radius-sm); padding:7px 11px; font-size:.76rem; font-weight:600; cursor:pointer; text-decoration:none; }
@@ -427,7 +450,7 @@
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Tornar als resultats
     </button>
-    <div id="map" class="map" role="application" aria-label="Mapa amb la ubicació dels tallers filtrats">
+    <div id="map" class="map" aria-label="Mapa amb la ubicació dels tallers filtrats">
       <button type="button" class="locate-btn" id="mapLocateBtn" aria-label="Centrar el mapa a la meva ubicació" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
@@ -454,7 +477,7 @@
   <h2 id="seoHeading">Tendes de bicicletes per província a Catalunya i Andorra</h2>
   <p>
     Aquest directori reuneix <strong>tendes i tallers de bicicletes reals</strong>, verificats un a un per cerca web (en castellà,
-    <em>tiendas y talleres de bicicletas</em>) repartits per Barcelona, Girona, Lleida, Tarragona
+    <em lang="es">tiendas y talleres de bicicletas</em>) repartits per Barcelona, Girona, Lleida, Tarragona
     i el Principat d'Andorra. Hi trobaràs des de tallers de barri especialitzats en reparació i
     manteniment fins a botigues amb servei oficial, bicicletes elèctriques, MTB, carretera,
     gravel, cargo bikes i plegables.
@@ -464,7 +487,7 @@
     <h3>Tendes de bicicletes a Barcelona</h3>
     <p>
       A la província de Barcelona hi ha la major concentració de <strong>tendes de bicicletes</strong>
-      (<em>tiendas de bicicletas en Barcelona</em>) del directori, amb tallers a la ciutat de
+      (<em lang="es">tiendas de bicicletas en Barcelona</em>) del directori, amb tallers a la ciutat de
       Barcelona i a municipis com Sabadell, Terrassa, Mataró, Sant Cugat del Vallès o
       Badalona. <a href="?provincia=barcelona">Veure tendes de bicicletes a Barcelona</a>.
     </p>
@@ -474,7 +497,7 @@
     <h3>Tendes de bicicletes a Girona i la Costa Brava</h3>
     <p>
       A Girona i la Costa Brava trobaràs <strong>tendes i tallers de bicicletes</strong>
-      (<em>tiendas de bicicletas en Girona</em>) a Girona ciutat, Figueres, Olot, Banyoles,
+      (<em lang="es">tiendas de bicicletas en Girona</em>) a Girona ciutat, Figueres, Olot, Banyoles,
       Blanes i Lloret de Mar, amb especialistes en carretera, gravel i cicloturisme.
       <a href="?provincia=girona">Veure tendes de bicicletes a Girona</a>.
     </p>
@@ -484,7 +507,7 @@
     <h3>Tendes de bicicletes a Lleida i el Pirineu</h3>
     <p>
       A Lleida, el Prepirineu i el Pirineu, el directori inclou <strong>tendes de bicicletes</strong>
-      (<em>tiendas de bicicletas en Lleida</em>) a Lleida ciutat, la Seu d'Urgell, Vielha i Sort,
+      (<em lang="es">tiendas de bicicletas en Lleida</em>) a Lleida ciutat, la Seu d'Urgell, Vielha i Sort,
       amb tallers especialitzats en MTB, e-bikes de muntanya i alta muntanya.
       <a href="?provincia=lleida">Veure tendes de bicicletes a Lleida</a>.
     </p>
@@ -494,7 +517,7 @@
     <h3>Tendes de bicicletes a Tarragona i la Costa Daurada</h3>
     <p>
       A Tarragona i la Costa Daurada trobaràs <strong>tendes de bicicletes</strong>
-      (<em>tiendas de bicicletas en Tarragona</em>) a Tarragona ciutat, Reus, Salou, Cambrils i
+      (<em lang="es">tiendas de bicicletas en Tarragona</em>) a Tarragona ciutat, Reus, Salou, Cambrils i
       Tortosa, amb oferta d'alquiler turístic, cargo bikes i bicicletes plegables.
       <a href="?provincia=tarragona">Veure tendes de bicicletes a Tarragona</a>.
     </p>
@@ -515,10 +538,13 @@
   <h2>Províncies i zones</h2>
   <nav class="zones-nav" id="zonesNav" aria-label="Navegar per província"></nav>
   <p class="footer-credit">Directori independent de tendes i tallers de bicicletes · Catalunya i Andorra · Mapa © OpenStreetMap contributors · Adreces geocodificades en temps real amb <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">OpenStreetMap Nominatim</a>.</p>
+  <p class="footer-credit">
+    <strong>Privacitat i ubicació:</strong> la teva ubicació només es demana quan prems "Prop meu" o "Troba el taller més proper", mai automàticament. S'utilitza únicament al teu navegador per calcular distàncies i traçar una ruta: no s'emmagatzema ni s'envia als nostres servidors (no en tenim). Per calcular la ruta, les coordenades d'origen i destinació es transmeten al servei públic <a href="https://nominatim.openstreetmap.org" target="_blank" rel="noopener">Nominatim</a> i a <a href="https://project-osrm.org" target="_blank" rel="noopener">OSRM</a> (OpenStreetMap), sense cap altra finalitat ni tercer implicat.
+  </p>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" integrity="sha256-Hk4dIpcqOSb0hZjgyvFOP+cEmDXUKKNE/tT542ZbNQg=" crossorigin="anonymous"></script>
 <script>
 (function(){
   "use strict";
@@ -678,6 +704,16 @@
     div.textContent = str==null ? "" : String(str);
     return div.innerHTML;
   }
+
+  // Validador estricte de domini: només s'accepten dominis amb format
+  // vàlid (lletres, xifres, guions i punts). Es fa servir abans de
+  // convertir el camp "website" del dataset en un enllaç clicable, per
+  // no confiar cegament en el contingut encara que ja estigui escapat.
+  function isValidWebsiteDomain(value){
+    if(!value) return false;
+    var domain = String(value).trim().replace(/^https?:\/\//i, "").split("/")[0];
+    return /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/i.test(domain);
+  }
   function provinceLabel(value){
     var f = PROVINCES.filter(function(p){ return p.value===value; })[0];
     return f ? f.label : value;
@@ -715,6 +751,7 @@
   var geocodeObserver = null;
   var geocodeDoneCount = 0;
   var geocodeTotalPending = 0;
+  var structuredDataRefreshTimer = null;
 
   function forwardGeocode(shop){
     var country = shop.province === "andorra" ? "Andorra" : "España";
@@ -753,6 +790,10 @@
         task.shop.geoSource = "Nominatim / OpenStreetMap (geocodificación en vivo)";
         var marker = markersById[task.shop.id];
         if(marker){ marker.setLatLng([coords.lat, coords.lng]); }
+        var pendingTag = document.querySelector('.shop-card[data-id="'+task.shop.id+'"] .geo-pending-tag');
+        if(pendingTag) pendingTag.remove();
+        clearTimeout(structuredDataRefreshTimer);
+        structuredDataRefreshTimer = setTimeout(injectStructuredData, 4000);
       }
     }).catch(function(){ /* si falla, se mantiene la coordenada de respaldo */ })
       .then(function(){
@@ -825,7 +866,7 @@
     var html = visible.map(function(shop){
       var distHTML = (state.sort==="distance" && shop.distance!=null)
         ? '<span>' + distanceIconSvg() + ' ' + shop.distance.toFixed(1) + ' km</span>' : "";
-      var websiteHTML = shop.website
+      var websiteHTML = isValidWebsiteDomain(shop.website)
         ? '<a href="https://'+escapeHTML(shop.website.replace(/^https?:\/\//,""))+'" target="_blank" rel="noopener noreferrer" class="btn-locate-card" aria-label="Web de '+escapeHTML(shop.name)+'">'+websiteIconSvg()+' Web</a>'
         : "";
       return (
@@ -844,7 +885,9 @@
           '</div>' +
           '<div class="tag-row">'+buildTagsHTML(shop)+'</div>' +
           '<div class="shop-card-footer">' +
-            '<span class="shop-address">'+pinIconSvg()+' '+escapeHTML(shop.address)+'</span>' +
+            '<span class="shop-address">'+pinIconSvg()+' '+escapeHTML(shop.address)+
+              (shop.geoVerified ? '' : ' <em class="geo-pending-tag" title="La ubicació al mapa s\'està verificant en temps real; pot trigar uns segons a situar-se amb precisió">· ubicació en verificació</em>') +
+            '</span>' +
             '<div class="shop-card-actions">' + websiteHTML +
               '<button type="button" class="btn-locate-card" data-id="'+shop.id+'">'+pinIconSvg()+' Al mapa</button>' +
             '</div>' +
@@ -1028,7 +1071,7 @@
       if(isNaN(shop.lat) || isNaN(shop.lng)) return;
       var marker = L.marker([shop.lat, shop.lng], { icon: shopIcon(shop) });
 
-      var websiteLineHTML = shop.website
+      var websiteLineHTML = isValidWebsiteDomain(shop.website)
         ? '<p class="popup-line">'+websiteIconSvg()+' <a href="https://'+escapeHTML(shop.website.replace(/^https?:\/\//,""))+'" target="_blank" rel="noopener noreferrer">'+escapeHTML(shop.website)+'</a></p>'
         : "";
       var popupHTML =
@@ -1148,8 +1191,14 @@
 
     navigator.geolocation.getCurrentPosition(function(pos){
       state.userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      // Important: només calculem una distància útil per a les fitxes amb
+      // coordenades ja verificades (geoVerified). Les que encara estan
+      // pendents de geocodificació en viu es deixen sense distància (null)
+      // per no mostrar ni ordenar per una proximitat que podria ser errònia.
       state.shops.forEach(function(s){
-        s.distance = haversine(state.userLocation.lat, state.userLocation.lng, s.lat, s.lng);
+        s.distance = s.geoVerified
+          ? haversine(state.userLocation.lat, state.userLocation.lng, s.lat, s.lng)
+          : null;
       });
       document.getElementById("distanceOption").disabled = false;
       state.sort = "distance";
@@ -1180,13 +1229,21 @@
      dades OpenStreetMap, sense clau). Si el servei no respon, es
      mostra igualment la distància en línia recta i s'ofereix un
      enllaç extern a OpenStreetMap per a la ruta.
+
+     Només es tenen en compte botigues amb geoVerified === true:
+     calcular "la més propera" o traçar-hi una ruta amb una
+     coordenada aproximada (centre del municipi) podria portar
+     l'usuari a un lloc equivocat, així que és preferible no
+     mostrar cap resultat fins que hi hagi una ubicació real.
      ========================================================= */
   var routeLayer = null;
   var routeStartMarker = null;
 
   function findNearestShop(){
-    var candidates = getFilteredShops();
-    if(candidates.length === 0) candidates = state.shops;
+    var candidates = getFilteredShops().filter(function(s){ return s.geoVerified; });
+    if(candidates.length === 0){
+      candidates = state.shops.filter(function(s){ return s.geoVerified; });
+    }
     var nearest = null, best = Infinity;
     candidates.forEach(function(s){
       var d = haversine(state.userLocation.lat, state.userLocation.lng, s.lat, s.lng);
@@ -1239,7 +1296,7 @@
     if(!state.userLocation){ return; }
     var found = findNearestShop();
     if(!found){
-      alert("No hi ha cap botiga disponible amb els filtres actuals.");
+      alert("Encara no tenim cap adreça verificada a prop teu per calcular-hi una ruta fiable. Prova d'ampliar la zona de cerca o torna-ho a provar d'aquí una estona: les adreces es van verificant en temps real a mesura que es visualitzen.");
       return;
     }
     var shop = found.shop;
@@ -1460,8 +1517,27 @@
     var closeBtn = document.getElementById("closeDrawerBtn");
     var applyBtn = document.getElementById("applyFiltersBtn");
 
+    function getFocusableInDrawer(){
+      return Array.prototype.slice.call(
+        drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      ).filter(function(el){ return !el.disabled && el.offsetParent !== null; });
+    }
+
+    function trapFocus(e){
+      if(e.key !== "Tab" || !drawer.classList.contains("is-open")) return;
+      var focusables = getFocusableInDrawer();
+      if(focusables.length === 0) return;
+      var first = focusables[0], last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault(); last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault(); first.focus();
+      }
+    }
+
     function openDrawer(){
       drawer.classList.add("is-open");
+      drawer.setAttribute("aria-modal", "true");
       overlay.hidden = false;
       toggleBtn.setAttribute("aria-expanded","true");
       document.body.style.overflow = "hidden";
@@ -1470,6 +1546,7 @@
     }
     function closeDrawer(){
       drawer.classList.remove("is-open");
+      drawer.setAttribute("aria-modal", "false");
       overlay.hidden = true;
       toggleBtn.setAttribute("aria-expanded","false");
       document.body.style.overflow = "";
@@ -1483,6 +1560,7 @@
     applyBtn.addEventListener("click", closeDrawer);
     document.addEventListener("keydown", function(e){
       if(e.key==="Escape" && drawer.classList.contains("is-open")) closeDrawer();
+      trapFocus(e);
     });
   }
 
@@ -1574,7 +1652,13 @@
      17. DADES ESTRUCTURADES (SEO)
      ========================================================= */
   function injectStructuredData(){
-    var items = state.shops.map(function(shop, idx){
+    // Només es publiquen com a dades estructurades els negocis amb
+    // coordenades ja verificades (geoVerified) i telèfon real conegut.
+    // Publicar geo aproximat (centre del municipi) com si fos la posició
+    // exacta del negoci seria una dada estructurada inexacta.
+    var verifiedShops = state.shops.filter(function(s){ return s.geoVerified && s.phone; });
+
+    var items = verifiedShops.map(function(shop, idx){
       return {
         "@type": "ListItem",
         "position": idx + 1,
@@ -1598,11 +1682,13 @@
     var itemListSchema = {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      "name": "Tendes i tallers de bicicletes a Catalunya i Andorra",
+      "name": "Tendes i tallers de bicicletes a Catalunya i Andorra (subconjunt amb dades verificades)",
       "numberOfItems": items.length,
       "itemListElement": items
     };
 
+    var existing = document.getElementById("itemListSchema");
+    if(existing) existing.remove();
     var script = document.createElement("script");
     script.type = "application/ld+json";
     script.id = "itemListSchema";
